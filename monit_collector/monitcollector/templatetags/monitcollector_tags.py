@@ -1,7 +1,9 @@
-from django import template
-from django.utils import timezone
 import time
+
+from django import template
 from django.conf import settings
+from django.utils import timezone
+
 register = template.Library()
 
 try:
@@ -61,20 +63,19 @@ def status_class(status, monitor):
 
 @register.filter
 def in_MB(value):
-    if not isinstance(value, (int, basestring)):
+    if not isinstance(value, (int, str)):
         return ""
     return str(round(float(value)/1.e3, 1))+" MB"
 
 @register.filter
 def in_GB(value):
-    if not isinstance(value, (int, basestring)):
+    if not isinstance(value, (int, str)):
         return ""
     return str(round(float(value)/1.e6, 1))+" GB"
 
 @register.filter
 def percent(value):
-    if not isinstance(value, (float, basestring)):
+    if not isinstance(value, (float, str)):
         return ""
     return str(round(value, 1))+"%"
-
 
