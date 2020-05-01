@@ -1,16 +1,18 @@
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.shortcuts import  render, redirect
-from django.template.loader import render_to_string
-from django.core.urlresolvers import reverse
-from django.contrib.admin.views.decorators import staff_member_required
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from django.conf import settings
 import subprocess
+
+from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
 import requests
+
+from .models import Process, Server, System, collect_data
+
 # import socket
 
-from monitcollector.models import collect_data, Server, Process, System
 
 
 monit_update_period = getattr(settings, 'MONIT_UPDATE_PERIOD', 60)
@@ -25,16 +27,16 @@ def collector(request):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
     data = request.body
-    
+
     # for testing
     # with open("xml.xml", "w") as f:
     #     f.write(data)
-    
+
     collected = collect_data(data)
     if not collected:
         return HttpResponse('wrong data format')
     return HttpResponse('ok')
-   
+
 @staff_member_required
 def dashboard(request):
     if Server.objects.all().count() > 0:
@@ -92,7 +94,7 @@ def process_action(request, server_id):
     except:
         return render(request, 'monitcollector/error.html', {'time_out': time_out, 'monit_user': monit_user, 'ip_address': ip_address, 'monit_port': monit_port, 'process_name': process_name})
 
-    
+
 
 @staff_member_required
 def confirm_delete(request, server_id):
@@ -151,4 +153,3 @@ def load_process_data(request, server_id, process_name):
 #     if server.localhostname == socket.gethostname():
 #         return True
 #     return False
-
