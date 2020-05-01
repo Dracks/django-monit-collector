@@ -3,6 +3,7 @@ import subprocess
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
