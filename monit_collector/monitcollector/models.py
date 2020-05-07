@@ -144,7 +144,7 @@ class Server(models.Model):
 
 
 class Platform(models.Model):
-    server = models.OneToOneField('Server', on_delete=models.PROTECT)
+    server = models.OneToOneField('Server', on_delete=models.CASCADE)
     name = models.TextField(null=True)
     release = models.TextField(null=True)
     version = models.TextField(null=True)
@@ -180,7 +180,7 @@ class Service(models.Model):
 
 
 class System(Service):
-    server = models.OneToOneField('Server', on_delete=models.PROTECT)
+    server = models.OneToOneField('Server', on_delete=models.CASCADE)
     date_last = models.PositiveIntegerField(null=True)
     date = models.TextField(null=True)
     load_avg01_last = models.FloatField(null=True)
@@ -256,7 +256,7 @@ class System(Service):
 
 
 class Process(Service):
-    server = models.ForeignKey('Server', on_delete=models.PROTECT)
+    server = models.ForeignKey('Server', on_delete=models.CASCADE)
     date_last = models.PositiveIntegerField(null=True)
     date = models.TextField(null=True)
     pid = models.IntegerField(null=True)
