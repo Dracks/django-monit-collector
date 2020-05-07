@@ -40,10 +40,10 @@ def time_str(uptime):
     if years == 0:
         if days == 0:
             if hours == 0:
-                return "{:.2}m".format(mins)
-            return "{:.2}h {:.2}m".format(hours, mins)
-        return "{:.2}d {:.2}h {:.2}m".format(days, hours, mins)
-    return "{:.2}y {:.2}d {:.2}h {:.2}m".format(years, days, hours, mins)
+                return "{:.0}m".format(mins)
+            return "{:.0}h {:.0}m".format(hours, mins)
+        return "{:.0}d {:.0}h {:.0}m".format(days, hours, mins)
+    return "{:.0}y {:.0}d {:.0}h {:.0}m".format(years, days, hours, mins)
 
 # does nothing at the moment!
 @register.filter
